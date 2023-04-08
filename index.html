@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta brand="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="styles.css">
+        <title>OCEANS</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <h2 class="text-center" style="color:black">THE LARGEST OCEAN IN THE WORLD</h2>
+          
+    
+            <div id="demo"></div>
+        
+            <script>
+                var txt = "";
+                const xmlhttp = new XMLHttpRequest();
+                xmlhttp.onload = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        let oceans = JSON.parse(this.responseText);
+                        console.log(oceans);
+                        let txt = "";
+                        let user = "";
+            
+                        for(i = 0; i < oceans.length;i++){
+                            txt += `
+                                <div class="card mb-3">
+                                    <div class="row no-gutters">
+                                        <div class="col-md-8">
+                                            <img class="card-img" src="pics/img/${oceans[i].img}" alt="">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="card-body">
+                                                <h5 class="card-title">${oceans[i].name}</h5>
+                                                <p class="card-text"><b>Area: </b>${oceans[i].area}</p>
+                                                <p class="card-text"><b>Deepest Point: </b>${oceans[i].deepest_point}</p>
+                                                <p class="card-text"><b>${oceans[i].tempt} </b></p>
+                                              
+                                                <ul class="list-unstyled">
+                                                    
+                                    `;
+                            for(j = 0; j < oceans[i].temperature.length; j++){
+                                txt += `
+                                    <li><b>•</b> ${oceans[i].temperature[j]}</li>
+                                `;
+                            }
+                            txt += `
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        }
+                        document.getElementById("demo").innerHTML = txt;
+                    }
+                }
+                xmlhttp.open("GET", "http://jsonphp.test/ocean.php");
+                xmlhttp.send();
+            </script>
+    
+        </div>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+    </body>
+    </html>
